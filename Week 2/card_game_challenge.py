@@ -1,8 +1,13 @@
 import random
 import time
-import os
 
 suits = ['Diamonds', 'Clubs', 'Hearts', 'Spades']
+suitSymbols = {
+    'Diamonds' : '\033[91m♦\033[00m',
+    'Clubs' : '♣',
+    'Hearts' : '\033[91m♥\033[00m',
+    'Spades' : '♠'
+}
 
 class card():
 
@@ -13,13 +18,15 @@ class card():
 
 class player():
 
-    def __init__(self):
+    def __init__(self, id):
+        self.id = id
         self.player_hand = {
             'Diamonds' : [],
             'Clubs' : [],
             'Hearts' : [],
             'Spades' : []
         }
+        self.round_card = []
     
     def add_to_hand(self, card):
         self.player_hand[card.suit] += [card.number]
@@ -28,13 +35,13 @@ class player():
         returned_text = []
         for suit in self.player_hand:
             cards = ', '.join(map(str, self.player_hand[suit]))
-            returned_text.append(f'You have the {cards} of {suit}\n')
+            returned_text.append(f'You have the {cards} of {suit} {suitSymbols[suit]}\n')
         return '\n'.join(returned_text)
 
-player_user = player()
-player_2 = player()
-player_3 = player()
-player_4 = player()
+player_user = player('p1')
+player_2 = player('p2')
+player_3 = player('p3')
+player_4 = player('p4')
 
 all_cards = []
 all_players = [player_user, player_2, player_3, player_4]
@@ -68,11 +75,11 @@ assignSuits()
 
 # Ace > King > Queen > Jack
 
-#time.sleep(1)
+time.sleep(1)
 print('\nCards being shuffled ...\n')
-#time.sleep(2)
+time.sleep(2)
 print(player_user.show_hand())
-#time.sleep(1.5)
+time.sleep(1.5)
 
 def userTurn():
 
@@ -93,11 +100,15 @@ def userTurn():
         print('You dont have this card\n')
         userTurn()
     
+    player_user.round_card.append(played_card_number)
+    player_user.round_card.append(played_card_suit)
     return played_card_number, played_card_suit
 
 chosen_card = userTurn()
 time.sleep(0.5)
-print(f'You have chosen the {chosen_card[0]} of {chosen_card[1]}')
+bold = '\033[1m'
+standard = '\033[0m'
+print(f'You have chosen the {bold}{chosen_card[0]}\033[0m {suitSymbols[chosen_card[1]]}')
 
 def botTurn():
     time.sleep(1)
@@ -110,7 +121,15 @@ def botTurn():
             randomSuit = random.choice(suits)
         randomCard = random.choice(botPlayer.player_hand[randomSuit])
         time.sleep(1)
-        print(f'{randomCard} of {randomSuit}\n')
+        print(f'{bold}{randomCard}{standard} {suitSymbols[randomSuit]}\n')
+        botPlayer.round_card.append(randomCard)
+        botPlayer.round_card.append(randomSuit)
 
 botTurn()
+
+tricks = {}
+for x in all_players:
+    tricks[x.id] = x.round_card
+
+print(tricks)
 
