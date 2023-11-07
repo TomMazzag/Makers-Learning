@@ -1,5 +1,6 @@
 import random
 import time
+import os
 
 suits = ['Diamonds', 'Clubs', 'Hearts', 'Spades']
 
@@ -36,6 +37,7 @@ player_3 = player()
 player_4 = player()
 
 all_cards = []
+all_players = [player_user, player_2, player_3, player_4]
 
 def assignSuits():
 
@@ -45,7 +47,7 @@ def assignSuits():
     
     card_index = [i for i in range(0, 52)]
 
-    all_players = [player_user, player_2, player_3, player_4]
+    
     for selected_player in all_players:
         for i in range(0, 13):
             random_card = random.choice(card_index)
@@ -94,5 +96,21 @@ def userTurn():
     return played_card_number, played_card_suit
 
 chosen_card = userTurn()
-print(f'\nYou have chosen the {chosen_card[0]} of {chosen_card[1]}')
+time.sleep(0.5)
+print(f'You have chosen the {chosen_card[0]} of {chosen_card[1]}')
+
+def botTurn():
+    time.sleep(1)
+    print('\nOther players have chosen')
+
+    for botPlayer in all_players[1:4]:
+        randomSuit = random.choice(suits)
+        while random.choice(botPlayer.player_hand[randomSuit]) == None:
+            print(f'No {randomSuit}')
+            randomSuit = random.choice(suits)
+        randomCard = random.choice(botPlayer.player_hand[randomSuit])
+        time.sleep(1)
+        print(f'{randomCard} of {randomSuit}\n')
+
+botTurn()
 
