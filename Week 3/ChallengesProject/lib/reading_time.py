@@ -20,9 +20,4 @@ def estimated_reading_time(text):
         return('No words in input')
     
     return(time_string)
-    # reading_time = length of words in text / words per minute
-    # Return:
-    #   reading_time
-    #   f string of minutes and seconds
-    #   E.g. 5 minutes and 10 seconds
 
