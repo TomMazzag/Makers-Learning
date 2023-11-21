@@ -9,6 +9,7 @@ class UserInterface:
         self._show("You have these ships remaining: {}".format(
             self._ships_unplaced_message()))
         self._prompt_for_ship_placement()
+        self._show("OK.")
         self._show("This is your board now:")
         self._show(self._format_board())
 
@@ -27,14 +28,24 @@ class UserInterface:
         ship_length = self._prompt("Which do you wish to place?")
         ship_orientation = self._prompt("Vertical or horizontal? [vh]")
         ship_row = self._prompt("Which row?")
+        if int(ship_row) > self.game.rows:
+            ship_row = self._prompt("Out of range, which row?")
         ship_col = self._prompt("Which column?")
-        self._show("OK.")
-        self.game.place_ship(
+        if int(ship_col) > self.game.cols:
+            ship_col = self._prompt("Out of range, which row?")
+        
+        place = self.game.place_ship(
             length=int(ship_length),
             orientation={"v": "vertical", "h": "horizontal"}[ship_orientation],
             row=int(ship_row),
             col=int(ship_col),
         )
+
+        while place == 'Outside the board':
+            self._show(f'--{place}')
+            self._prompt_for_ship_placement()
+            break
+        
 
     def _format_board(self):
         rows = []

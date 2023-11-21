@@ -18,6 +18,12 @@ class Game:
         ]
 
     def place_ship(self, length, orientation, row, col):
+        if orientation == 'vertical':
+            if self.rows - row <= length:
+                return 'Outside the board'
+        else:
+            if self.cols - col <= length:
+                return 'Outside the board'
         ship_placement = ShipPlacement(
             length=length,
             orientation=orientation,
