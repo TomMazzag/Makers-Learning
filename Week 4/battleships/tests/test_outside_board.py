@@ -42,6 +42,43 @@ class Mock_game():
         ship_col = col
         if int(ship_col) > 10:
             return "Out of range, which row?"
+        
+
+from lib.user_interface import UserInterface
+
+
+class TestUserInterface(unittest.TestCase):
+    def test_wrong_then_right_column(self):
+        io = TerminalInterfaceHelperMock()
+        interface = UserInterface(io, Game())
+        io.expect_print("Welcome to the game!")
+        io.expect_print("Set up your ships first.")
+        io.expect_print("You have these ships remaining: 2, 3, 3, 4, 5")
+        io.expect_print("Which do you wish to place?")
+        io.provide("5")
+        io.expect_print("Vertical or horizontal? [vh]")
+        io.provide("v")
+        io.expect_print("Which row?")
+        io.provide("3")
+        io.expect_print("Which column?")
+        io.provide("11")
+        io.expect_print("Out of range, which column?")
+        io.provide("10")
+        io.expect_print("OK.")
+        io.expect_print("This is your board now:")
+        io.expect_print("\n".join([
+            "..........",
+            "..........",
+            ".........S",
+            ".........S",
+            ".........S",
+            ".........S",
+            ".........S",
+            "..........",
+            "..........",
+            ".........."
+        ]))
+        interface.run()
 
 
 

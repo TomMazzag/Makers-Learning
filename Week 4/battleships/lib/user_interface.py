@@ -1,7 +1,11 @@
+from lib.ship import *
+
 class UserInterface:
     def __init__(self, io, game):
         self.io = io
         self.game = game
+        self.chosen_ship = ''
+        self.placed_ship_count = 0
 
     def run(self):
         self._show("Welcome to the game!")
@@ -12,6 +16,19 @@ class UserInterface:
         self._show("OK.")
         self._show("This is your board now:")
         self._show(self._format_board())
+        self.placed_ship_count += int(self.chosen_ship)
+
+    def next_turn(self):
+        self.ships_remaining()
+        self._prompt_for_ship_placement()
+        self._show("OK.")
+        self.placed_ship_count += int(self.chosen_ship)
+        if self.check_for_overlap() == True:
+            self._show("Current position is overlapping")
+        else:
+            print('y')
+            self._show("This is your board now:")
+            self._show(self._format_board())
 
     def _show(self, message):
         self.io.write(message + "\n")
@@ -32,7 +49,7 @@ class UserInterface:
             ship_row = self._prompt("Out of range, which row?")
         ship_col = self._prompt("Which column?")
         if int(ship_col) > self.game.cols:
-            ship_col = self._prompt("Out of range, which row?")
+            ship_col = self._prompt("Out of range, which column?")
         
         place = self.game.place_ship(
             length=int(ship_length),
@@ -41,6 +58,7 @@ class UserInterface:
             col=int(ship_col),
         )
 
+        self.chosen_ship = ship_length
         while place == 'Outside the board':
             self._show(f'--{place}')
             self._prompt_for_ship_placement()
@@ -58,3 +76,15 @@ class UserInterface:
                     row_cells.append(".")
             rows.append("".join(row_cells))
         return "\n".join(rows)
+    
+    def check_for_overlap(self):
+        boardCount = self._format_board().count('S')
+        if self.placed_ship_count != boardCount:
+            return True
+
+    
+    def ships_remaining(self):
+        self.game.remove_ship(int(self.chosen_ship))
+        self._show("You have these ships remaining: {}".format(
+            self._ships_unplaced_message()))
+        pass

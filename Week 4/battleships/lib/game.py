@@ -7,15 +7,19 @@ class Game:
         self.ships_placed = []
         self.rows = rows
         self.cols = cols
-
-    def unplaced_ships(self):
-        return [
+        self.remaining = [
             Ship(2),
             Ship(3),
             Ship(3),
             Ship(4),
             Ship(5),
         ]
+
+    def unplaced_ships(self):
+        return self.remaining
+    
+    def remove_ship(self, number):
+        self.remaining.remove(Ship(number))
 
     def place_ship(self, length, orientation, row, col):
         if orientation == 'vertical':
