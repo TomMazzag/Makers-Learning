@@ -6,7 +6,7 @@ This is a project for reading and adding posts and comments to a database called
 
 ```
 Make sure a postgres database is created called blog
-The database can be sdeded by using the seeds/dbsetup.sql file
+The database can be seeded by using the seeds/dbsetup.sql file
 
 app.py needs to be run in terminal of choice
 ```
