@@ -1,0 +1,28 @@
+<html>
+  <head></head>
+  <body>
+    <h1>Albums</h1>
+
+    <div class="error" style="color: red;">
+        {{errors}}
+    </div>
+
+    <form action="/albums" method="POST">
+        <p>
+            Title: 
+            <input type="text" name="title">
+        </p>
+        <p>
+            Release year:
+            <input type="text" name="release_year">
+        </p>
+        <p>
+            Artist id:
+            <input type="number" min="0" step="1" name="artist_id" autocomplete="off">
+        </p>
+
+        <input type="submit" value="Add album">
+    </form>
+
+  </body>
+</html>

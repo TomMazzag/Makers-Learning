@@ -1,0 +1,24 @@
+<html>
+  <head></head>
+  <body>
+    <h1>Artists</h1>
+
+    <div class="error" style="color: red;">
+        {{errors}}
+    </div>
+
+    <form action="/artists" method="POST">
+        <p>
+            Name: 
+            <input type="text" name="name">
+        </p>
+        <p>
+            Genre:
+            <input type="text" name="genre">
+        </p>
+
+        <input type="submit" value="Add album">
+    </form>
+
+  </body>
+</html>

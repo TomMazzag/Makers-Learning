@@ -35,5 +35,7 @@ def test_get_artists(page, test_web_address, db_connection):
         "Pixies",
         "ABBA",
         "Taylor Swift",
-        "Nina Simone"
+        "Nina Simone",
+        'Add Artist'
     ])
+    page.screenshot(path="screenshot.png", full_page=False)

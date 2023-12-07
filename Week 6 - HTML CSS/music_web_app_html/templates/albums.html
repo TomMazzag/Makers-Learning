@@ -3,11 +3,16 @@
   <body>
     <h1>Albums</h1>
 
-    {% for album in albums %}
-    <div>
-        <a href="/albums/{{album.id}}">{{album.title}}</a>
+    <div style="padding-bottom: 20px;">
+      {% for album in albums %}
+      <div>
+          <a href="/albums/{{album.id}}">{{album.title}}</a>
+      </div>
+      {% endfor %}  
     </div>
-    {% endfor %}
+  
+
+    <a href="/albums/new">Add Album</a>
 
   </body>
 </html>
