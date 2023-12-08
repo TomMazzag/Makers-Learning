@@ -15,7 +15,7 @@ class UserRepository():
     
     def create(self, user):
         hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
-        rows = self._connection.execute("INSERT INTO users (name, username, email, password) VALUES (%s, %s, %s, %s) RETURNING id",
+        rows = self._connection.execute("INSERT INTO users (name, username, email, hashed_password) VALUES (%s, %s, %s, %s) RETURNING id",
                                         [user.name, user.username, user.email, hashed_password])
         row = rows[0]
         user.id = row["id"]
@@ -29,12 +29,18 @@ class UserRepository():
         rows = self._connection.execute(
             'SELECT * from users WHERE username = %s OR email = %s', [user, user])
         print(rows)
+        if len(rows) == 0:
+            return False
         row = rows[0]
         return row['id']
 
     def verify_password(self, user, password):
-        self.find_user(user)
-        pass
-    
+        users_id = self.find_user(user)
+        if users_id == False:
+            return False
+        
+        hashed_database_pw = self._connection.execute('SELECT hashed_password from users WHERE id = %s', [users_id])[0]['hashed_password']
+        verified = bcrypt.checkpw(password.encode('utf-8'), hashed_database_pw)
+        return verified
 
         

@@ -48,3 +48,20 @@ def test_user_find_by_username(db_connection):
 
     result = repository.find_user('TomMazzag')
     assert result == 2
+
+def test_user_not_in_db(db_connection):
+    db_connection.seed('seeds/users_table.sql')
+    repository = UserRepository(db_connection)
+
+    result = repository.find_user('o')
+    assert result == False
+
+def test_password_matches(db_connection):
+    db_connection.seed('seeds/users_table.sql')
+    repository = UserRepository(db_connection)
+
+    tom = User(None, "Tom", "TomMazzag", "tom@mazzag.com", "testPassw0rd")
+    repository.create(tom)
+
+    result = repository.verify_password('TomMazzag', 'testPassw0rd')
+    assert 1 == 2

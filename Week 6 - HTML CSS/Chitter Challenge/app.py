@@ -43,8 +43,9 @@ def login_user():
     repo = UserRepository(connection)
     user = request.form['user']
     password = request.form['password']
-    return redirect('/chitter')
-    return render_template('login.html')
+    if repo.verify_password(user, password):
+        return redirect('/chitter')
+    return render_template('login.html', errors = "Incorrect username or password")
 
 @app.route('/chitter/signup')
 def user_signup():
@@ -68,6 +69,7 @@ def add_user():
         repo.create(user)
         return redirect('/chitter')
     error = 'There was an error in your submission, one or more of the fields is empty'
+    print(error)
     return render_template("signup.html", errors=error)
 
 #Only runs if ran through terminal on port 5001
