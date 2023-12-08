@@ -1,4 +1,5 @@
 from lib.user import User
+import bcrypt
 
 class UserRepository():
     def __init__(self, connection):
@@ -13,8 +14,9 @@ class UserRepository():
         return users
     
     def create(self, user):
+        hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
         rows = self._connection.execute("INSERT INTO users (name, username, email, password) VALUES (%s, %s, %s, %s) RETURNING id",
-                                        [user.name, user.username, user.email, user.password])
+                                        [user.name, user.username, user.email, hashed_password])
         row = rows[0]
         user.id = row["id"]
         return None
@@ -22,4 +24,17 @@ class UserRepository():
     def delete(self, album_id):
         self._connection.execute("DELETE FROM users WHERE id = %s", [album_id])
         return None
+    
+    def find_user(self, user):
+        rows = self._connection.execute(
+            'SELECT * from users WHERE username = %s OR email = %s', [user, user])
+        print(rows)
+        row = rows[0]
+        return row['id']
+
+    def verify_password(self, user, password):
+        self.find_user(user)
+        pass
+    
+
         

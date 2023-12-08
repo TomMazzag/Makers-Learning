@@ -29,7 +29,7 @@ def test_post_full(db_connection):
 
     new_post_1 = Post(None, "This is a new post by anonymous", 1)
     repository.create(new_post_1)
-    post_with_author = repository.get(1)
+    post_with_author = repository.get_one_post(1)
     print(f"{post_with_author['name']} - @{post_with_author['username']}")
     print(post_with_author['content'])
     assert 1 == 1

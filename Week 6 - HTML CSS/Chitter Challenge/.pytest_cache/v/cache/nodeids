@@ -9,5 +9,8 @@
   "tests/test_posts.py::test_post_full",
   "tests/test_user.py::test_add_to_db",
   "tests/test_user.py::test_eqaul",
-  "tests/test_user.py::test_user_class"
+  "tests/test_user.py::test_user_class",
+  "tests/test_user.py::test_user_find",
+  "tests/test_user.py::test_user_find_by_email",
+  "tests/test_user.py::test_user_find_by_username"
 ]

@@ -11,7 +11,10 @@ app = Flask(__name__)
 
 @app.route('/chitter')
 def get_menu():
-    return render_template('index.html')
+    connection = get_flask_database_connection(app)
+    post_repo = PostRepository(connection)
+    posts = post_repo.get_all()
+    return render_template('index.html', posts = posts)
 
 
 @app.route('/chitter/post/new')
@@ -31,12 +34,41 @@ def add_new_post():
     return redirect('/chitter')
 
 @app.route('/chitter/login')
-def get_user():
+def user_login():
+    return render_template('login.html')
+
+@app.route('/chitter/login', methods = ['POST'])
+def login_user():
+    connection = get_flask_database_connection(app)
+    repo = UserRepository(connection)
+    user = request.form['user']
+    password = request.form['password']
+    return redirect('/chitter')
     return render_template('login.html')
 
 @app.route('/chitter/signup')
-def add_user():
+def user_signup():
     return render_template('signup.html')
+
+@app.route('/chitter/signup', methods = ['POST'])
+def add_user():
+    connection = get_flask_database_connection(app)
+    repo = UserRepository(connection)
+    name = request.form['name']
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
+    user = User(None,
+                name,
+                username,
+                email,
+                password)
+    print(user.is_valid())
+    if user.is_valid():
+        repo.create(user)
+        return redirect('/chitter')
+    error = 'There was an error in your submission, one or more of the fields is empty'
+    return render_template("signup.html", errors=error)
 
 #Only runs if ran through terminal on port 5001
 if __name__ == '__main__':

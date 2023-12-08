@@ -16,11 +16,18 @@ class PostRepository():
         self._connection.execute("INSERT INTO posts (content, user_id) VALUES (%s, %s)", [post.content, post.user_id])
         return None
     
-    def get(self, post_id):
+    def get_one_post(self, post_id):
         post = self._connection.execute("SELECT posts.content, users.name, users.username \
                                  FROM posts \
                                  JOIN users \
                                  ON users.id = posts.user_id \
                                  WHERE posts.id = %s;", [post_id])
         return post[0]
+    
+    def get_all(self):
+        post = self._connection.execute("SELECT posts.content, users.name, users.username \
+                                 FROM posts \
+                                 JOIN users \
+                                 ON users.id = posts.user_id;")
+        return post
         
