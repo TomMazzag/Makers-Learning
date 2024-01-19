@@ -71,6 +71,8 @@ const challenge = () => {
     }
   }
 
+  module.exports = Candy;
+
   class ShoppingBasket {
     constructor(basket = []) {
       this.basket = basket;
@@ -101,5 +103,3 @@ const challenge = () => {
 
   console.log(basket.getTotalPrice());
 };
-
-challenge();

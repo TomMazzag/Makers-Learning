@@ -1,8 +1,8 @@
 {
-  "name": "testing_with_jest",
+  "name": "weatherclient",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "weatherClient.js",
   "scripts": {
     "test": "jest"
   },
