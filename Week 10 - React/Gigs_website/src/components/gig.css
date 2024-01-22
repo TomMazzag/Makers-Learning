@@ -1,0 +1,35 @@
+.gig {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    text-align: center;
+    width: 500px;
+}
+  
+.bandName {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 8px;
+}
+
+.bandImage {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.eventDescription, .dateTime, .location {
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.dateTime {
+    font-weight: bold;
+}
+
+.location {
+    font-style: italic;
+}
+  

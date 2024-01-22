@@ -9,7 +9,4 @@ export default defineConfig({
     environment: "jsdom", // We are testing a DOM environment, not Node
     setupFiles: "./tests/setup.js",
   },
-  build: {
-    sourcemap: true,
-  },
 });
