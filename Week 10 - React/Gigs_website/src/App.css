@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  max-width: 1680px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -7,4 +7,11 @@
 
 .logo {
   width: 15rem;
+}
+
+.allGigs {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
